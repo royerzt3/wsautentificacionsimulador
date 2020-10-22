@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# S2221: "Exception" should not be caught when not required by called methods
+dotnet_diagnostic.S2221.severity = none

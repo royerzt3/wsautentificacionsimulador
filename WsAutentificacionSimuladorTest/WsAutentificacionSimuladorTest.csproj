@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <SonarQubeTestProject>true</SonarQubeTestProject>
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Banco.PD3.Persistence">
+      <HintPath>Dll\Banco.PD3.Persistence.dll</HintPath>
+    </Reference>
+    <Reference Include="BibliotecaSimulador">
+      <HintPath>Dll\BibliotecaSimulador.dll</HintPath>
+    </Reference>
+
+    <Reference Include="PD3.PolicyManager">
+      <HintPath>Dll\PD3.PolicyManager.dll</HintPath>
+    </Reference>
+    <Reference Include="PD3.Utilities">
+      <HintPath>Dll\PD3.Utilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WsAutentificacionSimulador\WsAutentificacionSimulador.csproj" />
+  </ItemGroup>
+  
+  <Target Name="SetJFrogProperties" BeforeTargets="DownloadDependencies;PrepareForBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
+    <Message Text="Setting JFrog properties" />
+    <!--Build name property-->
+    <CreateProperty Condition=" '$(BuildName)' == '' " Value="$(MSBuildProjectName)">
+      <Output TaskParameter="Value" PropertyName="BuildName" />
+    </CreateProperty>
+    <!--Build number property-->
+    <CreateProperty Condition=" '$(BuildNumber)' == '' " Value="$([System.DateTime]::UtcNow.Ticks)">
+      <Output TaskParameter="Value" PropertyName="BuildNumber" />
+    </CreateProperty>
+    <!--Build flags-->
+    <CreateProperty Value="--build-name=$(BuildName) --build-number=$(BuildNumber)">
+      <Output TaskParameter="Value" PropertyName="BuildFlags" />
+    </CreateProperty>
+    <!--Output path pattern fix, use this property to upload all the artifacts in build OutputPath-->
+    <CreateProperty Value="$([System.String]::Copy('$(OutputPath)').Replace('\','\\'))">
+      <Output TaskParameter="Value" PropertyName="ArtifatsPatternPath" />
+    </CreateProperty>
+  </Target>
+
+ 
+
+</Project>
