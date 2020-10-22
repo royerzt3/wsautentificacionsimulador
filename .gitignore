@@ -1,6 +1,8 @@
 .vs
-[Oo]bj
-[Bb]in
+WsAutentificacionSimulador/[Oo]bj/Debug/
+WsAutentificacionSimulador/[Oo]bj/Release/
+WsAutentificacionSimuladorTest/[Oo]bj/Debug/
+WsAutentificacionSimuladorTest/[Oo]bj/Release/
 DLL
 .ruleset
 .sonarlint

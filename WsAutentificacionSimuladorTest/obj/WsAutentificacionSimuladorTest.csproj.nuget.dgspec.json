@@ -1,0 +1,282 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimuladorTest\\WsAutentificacionSimuladorTest.csproj": {}
+  },
+  "projects": {
+    "E:\\Viper\\Credito\\Rentabilidad\\FRONT\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Viper\\Credito\\Rentabilidad\\FRONT\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj",
+        "projectName": "BibliotecaSimulador",
+        "projectPath": "E:\\Viper\\Credito\\Rentabilidad\\FRONT\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj",
+        "packagesPath": "E:\\Users\\zgonzalez\\.nuget\\packages\\",
+        "outputPath": "E:\\Viper\\Credito\\Rentabilidad\\FRONT\\bibliotecasimulador-master\\BibliotecaSimulador\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "E:\\Users\\zgonzalez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[4.5.3.3, )"
+            },
+            "NETStandard.Library": {
+              "target": "Package",
+              "version": "[2.0.3, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "Open-XML-SDK": {
+              "target": "Package",
+              "version": "[2.9.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.0, )"
+            },
+            "System.IO": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "System.IO.Packaging": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.ServiceModel.Duplex": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.ServiceModel.Http": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.ServiceModel.NetTcp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.ServiceModel.Security": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimuladorTest\\WsAutentificacionSimuladorTest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimuladorTest\\WsAutentificacionSimuladorTest.csproj",
+        "projectName": "WsAutentificacionSimuladorTest",
+        "projectPath": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimuladorTest\\WsAutentificacionSimuladorTest.csproj",
+        "packagesPath": "E:\\Users\\zgonzalez\\.nuget\\packages\\",
+        "outputPath": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimuladorTest\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "E:\\Users\\zgonzalez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimulador\\WsAutentificacionSimulador.csproj": {
+                "projectPath": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimulador\\WsAutentificacionSimulador.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "MSTest.TestAdapter": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "MSTest.TestFramework": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.5.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimulador\\WsAutentificacionSimulador.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimulador\\WsAutentificacionSimulador.csproj",
+        "projectName": "WsAutentificacionSimulador",
+        "projectPath": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimulador\\WsAutentificacionSimulador.csproj",
+        "packagesPath": "E:\\Users\\zgonzalez\\.nuget\\packages\\",
+        "outputPath": "E:\\Viper\\Credito\\Rentabilidad\\SERVICIOS\\wsautentificacionsimulador-master\\WsAutentificacionSimulador\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "E:\\Users\\zgonzalez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "E:\\Viper\\Credito\\Rentabilidad\\FRONT\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
+                "projectPath": "E:\\Viper\\Credito\\Rentabilidad\\FRONT\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.1, )"
+            },
+            "System.ServiceModel.Http": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.ServiceModel.Security": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.0.3, 3.0.3]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
