@@ -41,6 +41,7 @@ using BibliotecaSimulador.ClasesAuxiliares;
 using System.Globalization;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Credito.Core.Log;
 
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: CLSCompliant(false)]
@@ -57,7 +58,8 @@ namespace WsAutentificacionSimulador.Controllers
         /// Instancia la interfaz de Configuration
         /// </summary>
         readonly DatosUsario usuarioDao = new DatosUsario();
-        private readonly BibliotecaSimulador.Logs.Logg _log;
+        // private readonly BibliotecaSimulador.Logs.Logg _log;
+        private static readonly Logger _log = new Logger(typeof(AutentificacionSimuladorController));
         private IConfiguration Configuration { get; set; }
         readonly string ambiente;
         /// <summary>
@@ -67,7 +69,7 @@ namespace WsAutentificacionSimulador.Controllers
         public AutentificacionSimuladorController(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this._log = new BibliotecaSimulador.Logs.Logg("Usuarios");
+           // this._log = new BibliotecaSimulador.Logs.Logg("Usuarios");
             this.ambiente = this.Configuration.GetValue<string>("Config:Ambiente");
         }
 
@@ -96,7 +98,8 @@ namespace WsAutentificacionSimulador.Controllers
             string URL_LlaveM;
             string urlRedirect = this.Configuration.GetValue<string>("Config:URLRedirect");
             string IP = Request.Host.ToString();
-            BibliotecaSimulador.Logs.PintarLog.PintaInformacion("WsAutentificacion - Login. Ambiente: " + ambiente, _log);
+            _log.WriteInfo("WsAutentificacion - Login. Ambiente: " + ambiente);
+           
             try
             {
                 //Obtiene URL de Login de LLave Maestra 
@@ -107,7 +110,7 @@ namespace WsAutentificacionSimulador.Controllers
             }
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 Response.Redirect(urlRedirect);
             }
         }
@@ -131,14 +134,14 @@ namespace WsAutentificacionSimulador.Controllers
             {
                 //Obtiene url del Simulador Abonos
                 url = (ambiente == "P") ? this.Configuration.GetValue<string>("Config:URLApp_P") : this.Configuration.GetValue<string>("Config:URLApp_D");
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacion("WsAutentificacion - getCode. Ambiente: " + ambiente, _log);
-                //Obtiene los datos de conexión del cliente
+                _log.WriteInfo("WsAutentificacion - getCode. Ambiente: " + ambiente);
+               //Obtiene los datos de conexión del cliente
                 ObtieneDatosCliente("getCode", null);
                 time.Start();
                 //Obtiene AccessToken con base en el code recibido
                 llave = await usuarioDao.ValidaCodeAsync(code);
                 time.Stop();
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionContador("Obtiene token", _log, time);
+                _log.WriteAndCount("Obtiene token", time);
                 //url = "http://localhost:14575/?";
                 //Redirecciona al aplicativo Simulador Abonos
                 Response.Redirect(url + "fcAccessToken=" + llave);
@@ -146,7 +149,7 @@ namespace WsAutentificacionSimulador.Controllers
 
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
             }
         }
 
@@ -169,7 +172,7 @@ namespace WsAutentificacionSimulador.Controllers
                 dtoUsr = await usuarioDao.ValidaUsuarioAsync(fcEmpleado, fcEmpresa);
                 if (dtoUsr != null)
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Obtiene información: " + JsonConvert.SerializeObject(dtoUsr), _log);
+                    _log.WriteInfo("Obtiene información: " + JsonConvert.SerializeObject(dtoUsr));
                     //Retorna el obj con toda la información del usuario 
                     return Ok(new RespuestaOK { respuesta = dtoUsr });
                 }
@@ -181,7 +184,7 @@ namespace WsAutentificacionSimulador.Controllers
             catch (Exception e)
             {
 
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 return StatusCode(StatusCodes.Status500InternalServerError, new RespuestaError { errorInfo = "Error al validar usuario " + e.Message });
             }
 
@@ -205,7 +208,7 @@ namespace WsAutentificacionSimulador.Controllers
                 bool respuestaSQL = usuarioDao.AltaUsuario(lstUsuarioFamilia);
                 if (!respuestaSQL)
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("RespuestaBD: " + respuestaSQL + this.Configuration.GetSection("msjErrorAlta").Value, _log);
+                    _log.WriteInfo("RespuestaBD: " + respuestaSQL + this.Configuration.GetSection("msjErrorAlta").Value);
                     return BadRequest(new RespuestaError400 { errorMessage = this.Configuration.GetSection("msjErrorAlta").Value });
                 }
                 else
@@ -215,7 +218,7 @@ namespace WsAutentificacionSimulador.Controllers
             }
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 return StatusCode(StatusCodes.Status500InternalServerError, new RespuestaError { errorInfo = e.Message });
             }
         }
@@ -239,13 +242,13 @@ namespace WsAutentificacionSimulador.Controllers
                 bool respuestaSQL = usuarioDao.ActualizarUsuario(out int FolioProceso, lstUsuarioFamilia);
                 if (!respuestaSQL)
                 {
-                    this._log.WriteInfo("RespuestaBD: " + respuestaSQL + msjError);
+                    _log.WriteInfo("RespuestaBD: " + respuestaSQL + msjError);
                     return BadRequest(new RespuestaError400 { errorMessage = msjError });
                 }
                 else
                 {
 
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Folio Proceso Actualización: " + FolioProceso + " " + this.Configuration.GetSection("msjActualización").Value, _log);
+                    _log.WriteInfo("Folio Proceso Actualización: " + FolioProceso + " " + this.Configuration.GetSection("msjActualización").Value);
                     //Genera la instacia para actualizar el usuario enviando como parámetro: 
                     //El objeto lstUsuarioFamilia que contien la info del usuario que se va modificar. 
                     ActualizacionUsuarioDsi actualizacionUsuarioDsi = new ActualizacionUsuarioDsi(lstUsuarioFamilia);
@@ -273,9 +276,9 @@ namespace WsAutentificacionSimulador.Controllers
             }
             catch (Exception e)
             {
-               
-                 BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
-                
+
+                _log.WriteError(e);
+
                 if (e.Message.Contains("DATASEC"))
                 {
                     return BadRequest(new RespuestaError400 { errorMessage = e.Message });
@@ -312,7 +315,7 @@ namespace WsAutentificacionSimulador.Controllers
             }
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 return StatusCode(StatusCodes.Status500InternalServerError, new RespuestaError { errorInfo = "Error al obtener la lista de usuarios" + e.Message });
             }
         }
@@ -336,18 +339,18 @@ namespace WsAutentificacionSimulador.Controllers
                 bool respuestaSQL = usuarioDao.BajaUsuario(fiEmpleado, fiUsuario);
                 if (!respuestaSQL)
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Respuesta: " + respuestaSQL + msjError, _log);
+                    _log.WriteInfo("Respuesta: " + respuestaSQL + msjError);
                     return BadRequest(new RespuestaError400 { errorMessage = msjError });
                 }
                 else
                 {
-                    this._log.WriteInfo(this.Configuration.GetSection("msjBaja").Value);
+                    _log.WriteInfo(this.Configuration.GetSection("msjBaja").Value);
                     return Ok(new RespuestaOK { respuesta = this.Configuration.GetSection("msjBaja").Value });
                 }
             }
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 if (e.Message.Contains("DATASEC"))
                 {
                     return BadRequest(new RespuestaError400 { errorMessage = e.Message });
@@ -381,7 +384,7 @@ namespace WsAutentificacionSimulador.Controllers
             catch (Exception e)
             {
                 //Se valida error de TimeOut o acceso a la IP del servicio de Fotos 
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 if (e is TimeoutException || e is UnauthorizedAccessException)
                 {
                     return BadRequest(new RespuestaError400 { errorMessage = this.Configuration.GetSection("msjErrorWSFotos").Value });
@@ -429,12 +432,12 @@ namespace WsAutentificacionSimulador.Controllers
             }
             catch (DefiniedNullReferenceException e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 return StatusCode(StatusCodes.Status500InternalServerError, new RespuestaError { errorInfo = $"{e.Message} \n {e.StackTrace}" });
             }
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 return StatusCode(StatusCodes.Status500InternalServerError, new RespuestaError { errorInfo = $"{e.Message} \n {e.StackTrace}" });
             }
         }
@@ -462,13 +465,12 @@ namespace WsAutentificacionSimulador.Controllers
                 {
                     _IP = HttpContext.GetServerVariable("REMOTE_ADDR");
                 }
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacion("IP: " + _IP.Substring(0) + " Server: " + _SERVER + " Host Remoto:" + _HOSTREMOTO + " Método: " + metodo + " Info: " + msj, _log);
+                _log.WriteInfo("IP: " + _IP.Substring(0) + " Server: " + _SERVER + " Host Remoto:" + _HOSTREMOTO + " Método: " + metodo + " Info: " + msj);
 
             }
             catch (Exception e)
             {
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
-
+                _log.WriteError(e);
             }
         }
 
@@ -485,12 +487,12 @@ namespace WsAutentificacionSimulador.Controllers
                 bool respuestaSQL = usuarioDao.BajaUsuarioLlaveMa(int.Parse(usuario.fiEmpleado));
                 if (!respuestaSQL)
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Respuesta: " + respuestaSQL + msjError, _log);
+                     _log.WriteInfo("Respuesta: " + respuestaSQL + msjError);
                     return BadRequest(new RespuestaError400 { errorMessage = msjError });
                 }
                 else
                 {
-                    this._log.WriteInfo(this.Configuration.GetSection("msjBaja").Value);
+                    _log.WriteInfo(this.Configuration.GetSection("msjBaja").Value);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-101", descSalida = "Baja aplicada exitosamente." });
                 }
             }
@@ -498,17 +500,18 @@ namespace WsAutentificacionSimulador.Controllers
             {
                 if (e.Message.Contains("001"))
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                    _log.WriteError(e);
+
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-102", descSalida = "El usuario ya se encontraba dado de baja." });
                 }
                 else if (e.Message.Contains("002"))
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                    _log.WriteError(e);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-103", descSalida = "No existe usuario en el sistema." });
                 }
                 else
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                    _log.WriteError(e);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-104", descSalida = "Error al consultar el servicio Baja de Usuarios, intenta más tarde." });
                 }
             }
@@ -526,12 +529,12 @@ namespace WsAutentificacionSimulador.Controllers
                 bool respuestaSQL = usuarioDao.BajaUsuarioLlaveMyt(Int32.Parse(fiUsuarioC.fiEmpleado));
                 if (!respuestaSQL)
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Respuesta: " + respuestaSQL + msjError, _log);
+                    _log.WriteInfo("Respuesta: " + respuestaSQL + msjError);
                     return BadRequest(new RespuestaError400 { errorMessage = msjError });
                 }
                 else
                 {
-                    this._log.WriteInfo(this.Configuration.GetSection("msjBaja").Value);
+                    _log.WriteInfo(this.Configuration.GetSection("msjBaja").Value);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-101", descSalida = "Baja aplicada exitosamente." });
                 }
             }
@@ -539,17 +542,17 @@ namespace WsAutentificacionSimulador.Controllers
             {
                 if (e.Message.Contains("001"))
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                    _log.WriteError(e);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-102", descSalida = "El usuario ya se encontraba dado de baja." });
                 }
                 else if (e.Message.Contains("002"))
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                    _log.WriteError(e);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-103", descSalida = "No existe usuario en el sistema." });
                 }
                 else
                 {
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                    _log.WriteError(e);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "CI-104", descSalida = "Error al consultar el servicio Baja de Usuarios, intenta más tarde." });
                 }
             }
@@ -573,7 +576,7 @@ namespace WsAutentificacionSimulador.Controllers
             catch (Exception e)
             {
 
-                BibliotecaSimulador.Logs.PintarLog.PintaInformacionError(e, _log);
+                _log.WriteError(e);
                 return Ok(new RespuestasBajaUsuario { cgSalida = "002", descSalida = "Error al aplicar el alta del autorizante: " + e });
 
             }
@@ -599,7 +602,7 @@ namespace WsAutentificacionSimulador.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    _log.WriteError(e);
                     return Ok(new RespuestasBajaUsuario { cgSalida = "002", descSalida = "Error al aplicar el alta del solicitante: " + e });
 
                 }
