@@ -79,9 +79,9 @@ namespace WsAutentificacionSimulador.Controllers
             Dictionary<string, string> creditos = new Dictionary<string, string>();
 
             creditos.Add("Tipo proyecto", "Servicio Web");
-            creditos.Add("Nombre", "WSAutentificacion");
+            creditos.Add("Nombre", "wsautentificacionsimulador");
             creditos.Add("Version Net Core", "3.1");
-            creditos.Add("Area", "Credito");
+            creditos.Add("Area", "Credito LAM");
             creditos.Add("Servidor Activo", "OK");
             creditos.Add("Version", "3.1");
             creditos.Add("Cambio", "Metodos de Prueba con respuesta Json");
